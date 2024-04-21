@@ -1,4 +1,9 @@
-# VSCode for AI development in Python (and more)
+---
+layout: post
+title:  "VSCode for AI development in Python (and more)"
+date:   2024-01-21 12:00:08 +0100
+categories: vscode ai-workflow
+---
 I will summarize in this post some of the most important settings I use in my everyday development of Artificial Intelligence (AI) in Python. 
 This setup is not exclusive for AI development as many settings are valid for other development areas and programming languages. 
 However, I find this setup very useful for my AI development work.
