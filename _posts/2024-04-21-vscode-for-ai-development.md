@@ -44,7 +44,7 @@ In PyCharm you change your files locally and then upload them to the remote host
 ```
 A useful tip for moving around or opening files outside the project in remote hosts (instead of clicking on File --> Open...) is to use the command `code FILE_OR_FOLDER` in the VSCode terminal.
 
-## The settings
+## 2. The settings
 There are three main levels of settings:
 - User: apply globally to all VS Code instances.
 - Remote: apply to a remote machine specifically for a user.
@@ -52,10 +52,10 @@ There are three main levels of settings:
 
 Some things:
 - The order of preference/override is Workspace > Remote > User.
-- You can find the JSON containing the changed settings by clicking: View -> "Command Palette..." -> "Preferences: Open XXX settings (JSON)".
+- You can find the JSON containing the changed settings by clicking: View -> "Command Palette..." -> "Preferences: Open XXX settings (JSON)". In this post, I will write the settings to put in these JSONs, but you can use the UI.
 - You can look for the Setting IDs that I link in this post directly by searching them in the bar of the "Settings" UI or adding them to the JSON. Example of ID: `python.defaultInterpreterPath`.
 
-## The Python interpreter
+## 3. The Python interpreter
 Once you open a `.py` file (and wait for the Python extension to install) you will be able to select a Python interpreter in the bottom-right corner. This means that once you open the project it will activate that virtual environment (venv) in every new terminal and use that environment for the debugger. 
 
 Some things:
@@ -63,13 +63,13 @@ Some things:
 - You can also set a "Default Interpreter Path" in your settings (under Extensions/Python). Setting ID: `python.defaultInterpreterPath`.
 - If you need to add paths so that they are recognized in the editor and automatically added to the `PYTHONPATH` edit the following settings: `python.analysis.extraPaths`, `python.analysis.extraPaths`.
 
-## Customize the user interface
+## 4. Customize the user interface
 You can hide parts of the user interface (UI) that you don't use to have a cleaner view. 
 - Right-click on the left panel icons to hide/show them.
 - Click on the `...` at the top-right corner of the left panel to show/hide sub-panels.
 - Click on the three icons at the top-right of VSCode to show/hide the panels at any moment.
 
-## The debugger
+## 5. The debugger
 Initialize the debugger configurations by opening a `.py` file, clicking in the "Run and Debug" tab on the left and then clicking in "create a launch.json" file.
 
 The `launch.json` configuration structure:
@@ -115,7 +115,7 @@ for debugging commands like `streamlit run demo.py --server.port=1234` use `modu
 },
 ```
 
-## Automatic formatting
+## 6. Automatic formatting
 You will need to have the `autopep8` extension installed (ID: `ms-python.autopep8`) and have the following settings:
 ```json
 {
@@ -135,7 +135,7 @@ I would set up those settings at the User level and overwrite them at the Worksp
 
 Tip: if you disable it by default, you can just format the selected lines by right-clicking on top and clicking on "Format Selection".
 
-## Automatic import sorting
+### Automatic import sorting
 You will need to have the `isort` extension installed (ID: `ms-python.isort`) and have the following settings:
 ```json
 {
@@ -151,3 +151,36 @@ You will need to have the `isort` extension installed (ID: `ms-python.isort`) an
 I would set up those settings at the User level and overwrite them at the Workspace level if necessary.
 
 Tip: if you disable it by default, you can just organize the imports in the current file with `Shift + Alt + O`.
+
+## 7. Stronger automatic formatting
+A more powerful but also more strict formatted (and linter) is Ruff (extension ID: `charliermarsh.ruff`).
+After installing the extension (instead of `autopep8` and `isort`) add the following settings:
+```json
+{
+...
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "notebook.formatOnSave.enabled": true,
+    "notebook.codeActionsOnSave": {
+        "notebook.source.fixAll": "explicit",
+        "notebook.source.organizeImports": "explicit"
+    },
+
+    // https://docs.astral.sh/ruff/configuration/#full-command-line-interface
+    "ruff.format.args": [
+        // Args for the automatic formatter
+        "--line-length=140"
+    ],
+    "ruff.lint.args": [
+        // Args for the linter (pop-up checks in the editor)
+        "--ignore=E731"
+    ]
+...
+}
+```
