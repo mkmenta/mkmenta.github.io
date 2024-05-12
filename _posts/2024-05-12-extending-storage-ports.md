@@ -12,6 +12,7 @@ These notes are about adding more storage drive ports to a motherboard. It can b
 ## The basics
 ### Connection types
 These are the current connection types for storage that I have found. In **bold** are the most common ones.
+
 | Connection        | Controller           | Max speed | Description/Notes                                                                                                                    |
 |-------------------|----------------------|----------:|--------------------------------------------------------------------------------------------------------------------------------------|
 | **SATA**          | **SATA III (3.x)**   |  600 MB/s | Very common. But the SATA controller is a bottleneck in speed for new drives and its connector is _unnecessarily_ big.               |
