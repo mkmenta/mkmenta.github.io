@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Extending a motherboard's storage ports to its maximum"
+title:  "Extending a motherboard's storage ports"
 date:   2024-05-12 00:00:00 +0100
 categories: hardware storage
 ---
