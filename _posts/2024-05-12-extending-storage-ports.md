@@ -4,6 +4,9 @@ title:  "Extending a motherboard's storage ports to its maximum"
 date:   2024-05-12 00:00:00 +0100
 categories: hardware storage
 ---
+
+_DISCLAIMER: the information here might not be completely correct. Please, if you find any error open an [issue](https://github.com/mkmenta/mkmenta.github.io/issues). Thanks!_
+
 These notes are about adding more storage drive ports to a motherboard. It can be useful for building a NAS to serve data for AI training or other applications. However, the first step should be figuring out your speed, capacity, and data integrity requirements. For example, I have found that training a computer vision deep learning model in an RTX 3090 in bfloat16 can take as low as 20MB/s random read to have the GPU at the maximum. If the model was trained with pre-processed low-resolution images/text, had more parameters to compute, or was in a higher precision data type, probably the speed requirements could have been even lower.
 
 ## The basics
