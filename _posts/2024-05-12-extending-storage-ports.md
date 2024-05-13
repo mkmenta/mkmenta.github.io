@@ -27,6 +27,7 @@ Note that previous versions of SATA, SAS, and PCIe x4 exist that provide slower 
 ### Disk types
 - Hard Disk Drives (HDD) can provide a lot of GB per € but their speed is limited: while they can achieve up to ~150MB/s if read/written sequentially*, when accessing them randomly they drop fast to ~2MB/s.
 - Solid-state drives (SSD) can provide huge random read/write speeds easily achieving 1-2GB/s. But they often are limited by the connection type (unless it is M.2 NVMe, see the Connection types section).
+
 *NOTE: In artificial intelligence (AI) training, datasets subdivided (sharded) in `.tar` files exploit the sequential read speed of HDDs to get high-performance cheaper (check [webdataset](https://github.com/webdataset/webdataset?tab=readme-ov-file#the-webdataset-format)).
 
 ## Adding M.2 NVMe ports
