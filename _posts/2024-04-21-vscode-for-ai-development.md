@@ -1,9 +1,10 @@
 ---
 layout: post
 title:  "VSCode for AI development in Python (and more)"
-date:   2024-10-04 12:00:08 +0100
+date:   2024-04-21 12:00:08 +0100
 categories: vscode ai-workflow
 ---
+_(Edited: Oct 4, 2024)_
 
 _DISCLAIMER: the information here might not be completely correct. Please, if you find any error open an [issue](https://github.com/mkmenta/mkmenta.github.io/issues). Thanks!_
 
