@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "VSCode for AI development in Python (and more)"
-date:   2024-01-21 12:00:08 +0100
+date:   2024-10-04 12:00:08 +0100
 categories: vscode ai-workflow
 ---
 
@@ -138,52 +138,43 @@ I would set up those settings at the User level and overwrite them at the Worksp
 
 Tip: if you disable it by default, you can just format the selected lines by right-clicking on top and clicking on "Format Selection".
 
-### Automatic import sorting
-You will need to have the `isort` extension installed (ID: `ms-python.isort`) and have the following settings:
-```json
-{
-...
-    "[python]": {
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": "explicit"
-        },
-      },
-...
-}
+## 7. git
+An essential extension for me if you are using git is GitLens (extension ID: `eamodio.gitlens`). With it you will be able to see all the branches, remotes, commits, etc. from the left *Source Control* tab. I personally hide everything in that tab except for:
+- Source control
+- Commits
+- Branches
+- Remotes
+- Stashes
+You can right-click on top of their names to hide or show them.
+
+For cleaning up the remote branches you can do the following:
+```sh
+git remote prune origin
 ```
-I would set up those settings at the User level and overwrite them at the Workspace level if necessary.
 
-Tip: if you disable it by default, you can just organize the imports in the current file with `Shift + Alt + O`.
+But I find it useful to set the following so that they are cleaned in each `git fetch`:
+```sh
+git config remote.origin.prune true
+```
 
-## 7. Stronger automatic formatting
-A more powerful but also more strict formatted (and linter) is Ruff (extension ID: `charliermarsh.ruff`).
-After installing the extension (instead of `autopep8` and `isort`) add the following settings:
-```json
-{
-...
-    "[python]": {
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-            "source.fixAll": "explicit",
-            "source.organizeImports": "explicit"
-        },
-        "editor.defaultFormatter": "charliermarsh.ruff"
-    },
-    "notebook.formatOnSave.enabled": true,
-    "notebook.codeActionsOnSave": {
-        "notebook.source.fixAll": "explicit",
-        "notebook.source.organizeImports": "explicit"
-    },
-
-    // https://docs.astral.sh/ruff/configuration/#full-command-line-interface
-    "ruff.format.args": [
-        // Args for the automatic formatter
-        "--line-length=140"
-    ],
-    "ruff.lint.args": [
-        // Args for the linter (pop-up checks in the editor)
-        "--ignore=E731"
-    ]
-...
+To clean the local branches of remote branches that have been removed (for example, because they were merged) you can use this function;
+```bash
+function git-local-prune {
+    # from: https://stackoverflow.com/a/33548037
+    delete_mode="-d"
+    if [ -n "$1" ]; then
+        if [ "$1" = "-f" ] || [  "$1" = "-F" ]; then
+            delete_mode="-D"
+        else
+            echo "Invalid argument"
+            return
+        fi
+    fi
+    
+    git fetch -p;
+    for branch in $(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '$2 == "[gone]" {sub("refs/heads/", "", $1); print $1}'); do 
+        git branch $delete_mode $branch; 
+    done;
 }
+export -f git-local-prune
 ```
