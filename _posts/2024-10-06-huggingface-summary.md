@@ -12,6 +12,7 @@ This is just an overview of the huggingface docs (focused on LLMs).
 To do simple inference use the [pipeline](https://huggingface.co/docs/transformers/main_classes/pipelines).
 - You can do it by task (find all the tasks in the [task](https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.pipeline) parameter docs of the API), and it will load a default model unless you specify it.
 - Or you can do it by model, if it has its task defined in the hub.
+
 ```python
 from transformers import pipeline
 
@@ -26,6 +27,7 @@ Output:
 
 ## Loading a model
 Using the Auto classes should be enough (they will detect the correct classes to use). However, sometimes like in the following case, there might be several possibilities and it might load the base class and not the one with the Causal Language Modeling head:
+
 ```python
 from transformers import AutoConfig, AutoModel, AutoTokenizer, LlamaForCausalLM
 
@@ -40,6 +42,7 @@ print(type(tokenizer))
 model = LlamaForCausalLM.from_pretrained("unsloth/Llama-3.2-1B-Instruct")
 print(type(model))
 ```
+
 Output:
 ```
 <class 'transformers.models.llama.configuration_llama.LlamaConfig'>
@@ -55,6 +58,7 @@ text_inputs = tokenizer(["Is 9.11 larger than 9.9?"], return_tensors="pt").to('c
 outputs = model.generate(**text_inputs, max_new_tokens=32)
 print(tokenizer.decode(outputs[0]))
 ```
+
 Output:
 ```
 <|begin_of_text|>Is 9.11 larger than 9.9? No, it is not.
@@ -68,6 +72,7 @@ NOTE: specifically for the case of `generate()`, `max_new_tokens` is a *kwarg* o
 🤗datasets is [very efficient](https://huggingface.co/docs/datasets/about_arrow). It does not load the dataset in memory by default and has cache systems built-in.
 
 This is a sample code to load a subset of a dataset and pre-process it:
+
 ```python
 from datasets import load_dataset
 from transformers import AutoTokenizer
