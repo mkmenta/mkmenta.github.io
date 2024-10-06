@@ -18,6 +18,7 @@ from transformers import pipeline
 pipe = pipeline(task="text-generation", model="unsloth/Llama-3.2-1B-Instruct")
 print(pipe("Is 9.11 larger than 9.9?"))
 ```
+
 Output:
 ```
 [{'generated_text': 'Is 9.11 larger than 9.9? No, it is not. '}]
