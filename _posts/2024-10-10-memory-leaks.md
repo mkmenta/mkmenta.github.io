@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Obscure memory leaks when training on PyTorch"
-date:   2024-04-21 12:00:08 +0100
-categories: vscode ai-workflow
+date:   2024-10-10 00:00:00 +0100
+categories: pytorch memory-leak python
 ---
 
 _DISCLAIMER: the information here might not be completely correct. Please, if you find any error open an [issue](https://github.com/mkmenta/mkmenta.github.io/issues). Thanks!_
