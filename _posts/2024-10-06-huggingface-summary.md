@@ -128,7 +128,7 @@ Output:
 ## Building a dataset
 I will show how it is done using an example. There are different ways of creating a dataset, but the one using a generator can be more efficient and it is general for any situation.
 
-```python3
+```python
 import numpy as np
 from datasets import Dataset, DatasetDict, load_dataset, disable_caching
 
