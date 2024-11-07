@@ -130,7 +130,7 @@ I will show how it is done using an example. There are different ways of creatin
 
 ```python
 import numpy as np
-from datasets import Dataset, DatasetDict, load_dataset, disable_caching
+from datasets import Dataset, DatasetDict, load_dataset, disable_caching, load_from_disk
 
 
 class MyGen:
@@ -176,19 +176,27 @@ def main():
 
     # Create the datasets
     train = Dataset.from_generator(MyGen('train'))
-    print(f"train: {len(train)}")
+    print(f"train,{len(train)}")
     val = Dataset.from_generator(MyGen2('val'))
-    print(f"val: {len(val)}")
+    print(f"val,{len(val)}")
     test = Dataset.from_generator(MyGen('test'))
-    print(f"test: {len(test)}")
+    print(f"test,{len(test)}")
     dsetdict = DatasetDict(train=train, validation=val, test=test)
 
     # Save the datasets to disk
     dsetdict.save_to_disk("mydatasets/playground")
 
     # Check that it works
+    # Not working:
     loaded_dsetdict = load_dataset("mydatasets/playground")
+    print(loaded_dsetdict['train'][0])
     loaded_train = load_dataset("mydatasets/playground", split='train')
+    print(loaded_train[0])
+    # Working:
+    loaded_dsetdict = load_from_disk("mydatasets/playground")
+    print(loaded_dsetdict['train'][0])
+    loaded_dsetdict = DatasetDict.load_from_disk("mydatasets/playground")
+    print(loaded_dsetdict['train'][0])
 
 
 if __name__ == '__main__':
