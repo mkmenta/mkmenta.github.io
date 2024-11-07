@@ -4,9 +4,16 @@ title:  "🤗Huggingface summary"
 date:   2024-10-06 12:00:00 +0100
 categories: hugginface api
 ---
-`transformers==4.45.1`
+_(Edited: Nov 7, 2024)_
 
-This is just an overview of the huggingface docs (focused on LLMs).
+_DISCLAIMER: the information here might not be completely correct. Please, if you find any error open an [issue](https://github.com/mkmenta/mkmenta.github.io/issues). Thanks!_
+
+This is just an overview and summary of the huggingface docs.
+
+```
+transformers==4.45.1
+datasets==3.0.2
+```
 
 ## Easy inference
 To do simple inference use the [pipeline](https://huggingface.co/docs/transformers/main_classes/pipelines).
@@ -116,4 +123,74 @@ Output:
  'source': 'infini-instruct-top-500k'}
 
 <|begin_of_text|>INSTRUCTION: Explain what boolean operators are, what they do, and provide examples of how they can be used in programming. Additionally, describe the concept of
+```
+
+## Building a dataset
+I will show how it is done using an example. There are different ways of creating a dataset, but the one using a generator can be more efficient and it is general for any situation.
+
+```python3
+import numpy as np
+from datasets import Dataset, DatasetDict, load_dataset, disable_caching
+
+
+class MyGen:
+    """Alternative 1."""
+
+    def __init__(self, split):
+        if split == 'train':
+            i = 6
+        elif split == 'val':
+            i = 206
+        elif split == 'test':
+            i = 406
+        self.data = np.arange(i, i + 100)
+
+    def __call__(self):
+        print("Called!")
+        for i in self.data:
+            yield {'myid': i}
+
+
+class MyGen2(MyGen):
+    """Alternative 2."""
+
+    def __call__(self):
+        print("Called!")
+        return self
+
+    def __iter__(self):
+        self._idx = 0
+        return self
+
+    def __next__(self):
+        if self._idx is None or self._idx >= len(self.data):
+            raise StopIteration
+        self._idx += 1
+        return {'myid': self.data[self._idx - 1]}
+
+
+def main():
+    # This is useful if the data in MyGen is fetched from a database
+    # for example, and you want to make sure that the data is fetched again
+    disable_caching()
+
+    # Create the datasets
+    train = Dataset.from_generator(MyGen('train'))
+    print(f"train: {len(train)}")
+    val = Dataset.from_generator(MyGen2('val'))
+    print(f"val: {len(val)}")
+    test = Dataset.from_generator(MyGen('test'))
+    print(f"test: {len(test)}")
+    dsetdict = DatasetDict(train=train, validation=val, test=test)
+
+    # Save the datasets to disk
+    dsetdict.save_to_disk("mydatasets/playground")
+
+    # Check that it works
+    loaded_dsetdict = load_dataset("mydatasets/playground")
+    loaded_train = load_dataset("mydatasets/playground", split='train')
+
+
+if __name__ == '__main__':
+    main()
 ```
