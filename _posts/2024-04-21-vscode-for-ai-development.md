@@ -4,7 +4,7 @@ title:  "VSCode for AI development in Python (and more)"
 date:   2024-04-21 12:00:08 +0100
 categories: vscode ai-workflow
 ---
-_(Edited: Oct 4, 2024)_
+_(Edited: Jul 1, 2025)_
 
 _DISCLAIMER: the information here might not be completely correct. Please, if you find any error open an [issue](https://github.com/mkmenta/mkmenta.github.io/issues). Thanks!_
 
@@ -179,3 +179,24 @@ function git-local-prune {
 }
 export -f git-local-prune
 ```
+
+## 8. Fix to Pylance being too slow
+
+If Pylance runs very slowly —such as hanging indefinitely when you use `Right click > Go to Definition`, or failing to underline undefined variables like in `x = undefined_variable`— the problem might be caused by a folder or symbolic link in your project that contains a large number of files. Luckily, the fix is easy: tell Pylance to ignore those folders.
+
+Create or edit the project settings in `.vscode/settings.json` and write something like:
+
+```json
+{
+    "python.analysis.exclude": [
+        // Default from VSCode
+        "**/node_modules",
+        "**/__pycache__",
+        ".git",
+        // For this specific project
+        "my_folder_with_lots_of_files"
+    ]
+}
+```
+
+You can also use wildcard characters `**` (a directory or multiple levels of directories), `*` (a sequence of zero or more characters), or `?` (a single character).
