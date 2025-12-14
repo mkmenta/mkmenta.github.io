@@ -21,7 +21,7 @@
 title: Mikel Menta Garde's Notebook
 # email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
-  This is Mikel Menta Garde's public notebook.
+  This is Mikel Menta Garde's public notebook. All content is licensed under CC BY 4.0.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
